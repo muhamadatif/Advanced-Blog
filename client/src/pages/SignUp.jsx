@@ -1,11 +1,4 @@
-import { Alert, Button, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
-import OAuth from "../components/OAuth";
-import { useSignup } from "../features/authentication/signup/useSignup";
-import { useForm, FormProvider } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TextFormField } from "../components/FormField";
-import { signupSchema } from "../schemas/authSchema";
 import { Logo } from "../components/Logo";
 import SignupForm from "../features/authentication/signup/SignupForm";
 
@@ -16,7 +9,7 @@ const SignUp = () => {
         {/* Left Side */}
         <Logo />
         {/* Right Side - Form */}
-        <div className={"flex-1 transition-all duration-300"}>
+        <div className={"flex-1"}>
           <SignupForm />
           {/* Already have an account */}
           <div className="mt-5 flex gap-2 text-sm">

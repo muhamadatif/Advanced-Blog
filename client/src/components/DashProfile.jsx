@@ -17,9 +17,11 @@ import {
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 const DashProfile = () => {
-  const { currentUser, error, loading } = useSelector((state) => state.user);
+  const { error, loading } = useSelector((state) => state.user);
+  const currentUser = useAuthUser();
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [uploadImageError, setUploadError] = useState(null);
@@ -60,11 +62,11 @@ const DashProfile = () => {
         formData.append("file", imageFile);
         formData.append(
           "upload_preset",
-          import.meta.env.VITE_CLOUDINARY_PRESET_NAME
+          import.meta.env.VITE_CLOUDINARY_PRESET_NAME,
         );
         formData.append(
           "cloud_name",
-          import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+          import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
         );
 
         try {
@@ -76,11 +78,11 @@ const DashProfile = () => {
             {
               onUploadProgress: (progressEvent) => {
                 const progress = Math.round(
-                  (progressEvent.loaded / progressEvent.total) * 100
+                  (progressEvent.loaded / progressEvent.total) * 100,
                 );
                 setUploadImageProgress(progress); // Update progress state
               },
-            }
+            },
           );
           setImageUrl(response.data.secure_url);
           setUpdateFormData({
@@ -178,8 +180,8 @@ const DashProfile = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-3 w-full">
-      <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
+    <div className="mx-auto w-full max-w-lg p-3">
+      <h1 className="my-7 text-center text-3xl font-semibold">Profile</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <input
           type="file"
@@ -189,7 +191,7 @@ const DashProfile = () => {
           hidden
         />
         <div
-          className="relative w-32 h-32 self-center cursor-pointer shadow-md rounded-full"
+          className="relative h-32 w-32 cursor-pointer self-center rounded-full shadow-md"
           onClick={() => filePickerRef.current.click()}
         >
           {uploadImageProgress > 0 && uploadImageProgress <= 100 && (
@@ -214,7 +216,7 @@ const DashProfile = () => {
           <img
             src={imageUrl || currentUser.profilePicture}
             alt="user"
-            className={`rounded-full w-full h-full max-w-[100%] object-cover border-8 border-[lightgray] ${
+            className={`h-full w-full max-w-[100%] rounded-full border-8 border-[lightgray] object-cover ${
               uploadImageProgress && uploadImageProgress < 100 && "opacity-60"
             }`}
           />
@@ -261,7 +263,7 @@ const DashProfile = () => {
         )}
       </form>
 
-      <div className="text-red-500 flex justify-between mt-5">
+      <div className="mt-5 flex justify-between text-red-500">
         <span onClick={() => setShowModal(true)} className="cursor-pointer">
           Delete Account
         </span>
@@ -293,7 +295,7 @@ const DashProfile = () => {
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
-            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
             <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
               Are you sure you want to delete your account?
             </h3>

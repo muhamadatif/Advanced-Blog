@@ -3,8 +3,10 @@ import { useSelector } from "react-redux";
 import { Button, Modal, Table } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { useAuthUser } from "../hooks/useAuthUser";
 const DashPosts = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const currentUser = useAuthUser();
+
   const [userPosts, setUserPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);

@@ -11,8 +11,10 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signoutSuccess } from "../redux/user/userSlice";
+import { useAuthUser } from "../hooks/useAuthUser";
 const DashSidebar = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const currentUser = useAuthUser();
+
   const dispatch = useDispatch();
   const location = useLocation();
   const [tab, setTab] = useState("");

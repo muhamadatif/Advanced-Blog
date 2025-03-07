@@ -1,38 +1,27 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormField } from "../../../components/FormField";
-import { Button, Spinner } from "flowbite-react";
+import { Alert, Button, Spinner } from "flowbite-react";
 import OAuth from "../../../components/OAuth";
-import { useSignup } from "./useSignup";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signupSchema } from "../../../schemas/authSchema";
+import { signinSchema } from "../../../schemas/authSchema";
+import { useSignin } from "./useSignin";
 
-const SignupForm = () => {
-  const { isLoading, signup } = useSignup();
-
+const SigninForm = () => {
+  const { isLoading, signin, error } = useSignin();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(signinSchema),
   });
 
   const onSubmit = (data) => {
-    signup(data);
+    signin(data);
   };
   return (
     <FormProvider>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          label="Your Username"
-          type="text"
-          placeholder="Username"
-          id="username"
-          register={register}
-          isLoading={isLoading}
-          error={errors?.username}
-        />
-
         <FormField
           label="Your Email"
           type="email"
@@ -61,17 +50,22 @@ const SignupForm = () => {
           {isLoading ? (
             <>
               <Spinner size="sm" />
-              <span className="pl-3">Loading...</span>
+              <span className="pl-3">Creating Account...</span>
             </>
           ) : (
-            "Sign Up"
+            "Sign in"
           )}
         </Button>
 
         <OAuth />
       </form>
+      {error && (
+        <Alert className="mt-5" color="failure">
+          {error}
+        </Alert>
+      )}
     </FormProvider>
   );
 };
 
-export default SignupForm;
+export default SigninForm;
