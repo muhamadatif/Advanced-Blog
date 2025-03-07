@@ -1,10 +1,10 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { FormField } from "../../../components/FormField";
 import { Alert, Button, Spinner } from "flowbite-react";
-import OAuth from "../../../components/OAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signinSchema } from "../../../schemas/authSchema";
 import { useSignin } from "./useSignin";
+import OAuth from "../googleAuth/OAuth";
 
 const SigninForm = () => {
   const { isLoading, signin, error } = useSignin();
