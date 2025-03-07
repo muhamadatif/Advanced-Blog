@@ -14,7 +14,6 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
 const app = express();
 //To allow our app to use json
 app.use(express.json());
