@@ -14,12 +14,13 @@ export const useSignin = () => {
   } = useMutation({
     mutationFn: signinApi,
     onSuccess: (currentUser) => {
-      queryClient.setQueryData(["user"], currentUser);
+      queryClient.setQueryData(["user"], currentUser, {
+        cacheTime: 1000 * 60 * 60, // 1 hour in cache before deletion
+      });
+
       navigate("/dashboard", { replace: true }); // Replaces the current entry in history. The user cannot go back to the previous page using the browser's "Back" button.
     },
     onError: (error) => {
-      console.log(error);
-
       toast.error(error.message);
     },
   });

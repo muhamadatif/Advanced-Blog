@@ -18,6 +18,8 @@ import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 const queryClient = new QueryClient();
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
@@ -29,6 +31,8 @@ persistQueryClient({
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
+
       <BrowserRouter>
         <ScrollToTop />
         {/*So that when we go from a rout to another we go to the top of the targeted page */}

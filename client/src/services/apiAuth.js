@@ -55,3 +55,15 @@ export const googleAuthApi = async ({ signInWithPopup, auth, provider }) => {
     throw new Error(data.message);
   }
 };
+
+export const signoutApi = async () => {
+  const res = await fetch("/api/user/signout", {
+    method: "POST",
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  console.log(data);
+  return data;
+};

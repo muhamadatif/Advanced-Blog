@@ -50,7 +50,7 @@ const SigninForm = () => {
           {isLoading ? (
             <>
               <Spinner size="sm" />
-              <span className="pl-3">Creating Account...</span>
+              <span className="pl-3">Loading...</span>
             </>
           ) : (
             "Sign in"

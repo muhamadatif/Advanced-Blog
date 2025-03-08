@@ -7,7 +7,7 @@ import { useGoogleAuth } from "./useGoogleAuth";
 
 const OAuth = () => {
   const auth = getAuth(app);
-  const { isLoading, googleAuth, error } = useGoogleAuth();
+  const { googleAuth } = useGoogleAuth();
   const provider = new GoogleAuthProvider();
   // it make the auth provider ask the client for which account he want to sign in with each time he want to sign in
   provider.setCustomParameters({ prompt: "select_account" });

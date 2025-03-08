@@ -12,7 +12,7 @@ import ErrorFallback from "./components/ErrorFallback.jsx";
 createRoot(document.getElementById("root")).render(
   <ErrorBoundary
     FallbackComponent={ErrorFallback}
-    onReset={() => window.location.replace("/sign-up")}
+    onReset={() => window.location.replace("/")}
   >
     <PersistGate loading={null} persistor={persistor}>
       <Provider store={store}>

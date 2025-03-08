@@ -13,7 +13,7 @@ const SignIn = () => {
         <div className="flex-1">
           <SigninForm />
           <div className="mt-5 flex gap-2 text-sm">
-            <span>Dont Have an account?</span>
+            <span>Don&apos;t Have an account?</span>
             <Link to="/sign-up" className="text-blue-500">
               Sign up
             </Link>
