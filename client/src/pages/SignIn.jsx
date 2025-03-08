@@ -5,8 +5,8 @@ import SigninForm from "../features/authentication/signin/SigninForm";
 
 const SignIn = () => {
   return (
-    <div className="mt-20 min-h-screen">
-      <div className="mx-auto flex max-w-3xl flex-col gap-5 p-3 md:flex-row md:items-center">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="mx-auto flex max-w-3xl flex-col justify-center gap-5 p-3 md:flex-row md:items-center">
         {/* left */}
         <Logo />
         {/* right */}

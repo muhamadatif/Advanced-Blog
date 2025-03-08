@@ -5,8 +5,6 @@ import SignIn from "./pages/Signin";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
-import Header from "./components/Header";
-import FooterComp from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
@@ -19,6 +17,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import AppContainer from "./components/AppContainer";
 
 const queryClient = new QueryClient();
 const persister = createSyncStoragePersister({
@@ -36,24 +35,25 @@ const App = () => {
       <BrowserRouter>
         <ScrollToTop />
         {/*So that when we go from a rout to another we go to the top of the targeted page */}
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route element={<AppContainer />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/post/:postSlug" element={<PostPage />} />
+
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+            <Route element={<OnlyAdminPrivateRoute />}>
+              <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/update-post/:postId" element={<UpdatePost />} />
+            </Route>
+          </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/search" element={<Search />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
-          <Route element={<OnlyAdminPrivateRoute />}>
-            <Route path="/create-post" element={<CreatePost />} />
-            <Route path="/update-post/:postId" element={<UpdatePost />} />
-          </Route>
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/post/:postSlug" element={<PostPage />} />
         </Routes>
-        <FooterComp />
       </BrowserRouter>
       <Toaster
         position="top-center"

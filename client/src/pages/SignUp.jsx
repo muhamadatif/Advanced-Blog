@@ -4,7 +4,7 @@ import SignupForm from "../features/authentication/signup/SignupForm";
 
 const SignUp = () => {
   return (
-    <div className="mt-20 min-h-screen">
+    <div className="flex min-h-screen items-center justify-center">
       <div className="mx-auto flex max-w-3xl flex-col gap-5 p-3 md:flex-row md:items-center">
         {/* Left Side */}
         <Logo />
