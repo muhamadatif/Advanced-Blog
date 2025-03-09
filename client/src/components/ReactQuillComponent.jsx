@@ -2,6 +2,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // or 'quill.bubble.css' for the bubble theme
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai.css"; // Choose a theme you like
+import { Alert } from "flowbite-react";
 
 const modules = {
   syntax: {
@@ -45,24 +46,31 @@ const formats = [
 ];
 /*eslint-disable*/
 const ReactQuillComponent = ({
-  theme,
-  onChange,
   className,
   placeholder,
-  required,
-  value,
+  onChange,
+  id,
+  onBlur,
+  error,
 }) => {
   return (
-    <ReactQuill
-      onChange={onChange}
-      modules={modules}
-      formats={formats}
-      theme={theme} // Or "bubble"
-      className={className}
-      placeholder={placeholder}
-      required={required}
-      value={value}
-    />
+    <>
+      <ReactQuill
+        modules={modules}
+        formats={formats}
+        theme="snow" // Or "bubble"
+        className="mb-12 h-72"
+        placeholder={placeholder}
+        id={id}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
+      {error?.message && (
+        <Alert className="mt-5" color="failure">
+          {error.message}
+        </Alert>
+      )}
+    </>
   );
 };
 

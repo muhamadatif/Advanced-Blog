@@ -12,6 +12,7 @@ import { useUpdateUser } from "./useUpdateUser";
 import { FormField } from "../../components/FormField";
 import toast from "react-hot-toast";
 import { MAX_SIZE } from "../../utils/constants";
+import LoadingButton from "../../components/LoadingButton";
 
 function UpdateUserForm() {
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -184,14 +185,8 @@ function UpdateUserForm() {
         error={errors.password}
         isLoading={isUpdating}
       />
-      <Button
-        type="submit"
-        gradientDuoTone="purpleToBlue"
-        outline
-        disabled={isUpdating || imageUploading}
-      >
-        {isUpdating ? "Loading..." : "Update"}
-      </Button>
+
+      <LoadingButton isLoading={isUpdating} text="Update User" />
       {currentUser.isAdmin && (
         <Link to="/create-post">
           <Button

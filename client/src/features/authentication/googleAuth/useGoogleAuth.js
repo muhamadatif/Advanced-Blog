@@ -1,11 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { googleAuthApi } from "../../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { login } from "../../../redux/user/userSlice";
 
 export const useGoogleAuth = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient(); // Get the queryClient instance
+  const dispatch = useDispatch();
   const {
     mutate: googleAuth,
     isPending: isLoading,
@@ -13,7 +15,7 @@ export const useGoogleAuth = () => {
   } = useMutation({
     mutationFn: googleAuthApi,
     onSuccess: (currentUser) => {
-      queryClient.setQueryData(["user"], currentUser);
+      dispatch(login(currentUser));
       navigate("/dashboard", { replace: true }); // Replaces the current entry in history. The user cannot go back to the previous page using the browser's "Back" button.
     },
     onError: (error) => {

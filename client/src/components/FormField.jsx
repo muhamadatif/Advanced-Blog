@@ -12,9 +12,10 @@ export const FormField = ({
   isLoading,
   error,
   defaultValue = "",
+  styles,
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className={` ${styles} flex flex-col`}>
       {label && (
         <Label htmlFor={id} className="font-medium">
           {label}

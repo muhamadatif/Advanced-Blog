@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSignout } from "../hooks/useSignout";
-import { useDeleteUser } from "../features/user/useDeleteUser";
-import UpdateUserForm from "../features/user/UpdateUserForm";
+import { useDeleteUser } from "../features/users/useDeleteUser";
+import UpdateUserForm from "../features/users/UpdateUserForm";
 import ModalComponent from "./Modal";
 
 const DashProfile = () => {

@@ -5,6 +5,7 @@ import { useSignup } from "./useSignup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../../../schemas/authSchema";
 import OAuth from "../googleAuth/OAuth";
+import LoadingButton from "../../../components/LoadingButton";
 
 const SignupForm = () => {
   const { isLoading, signup } = useSignup();
@@ -52,21 +53,7 @@ const SignupForm = () => {
           error={errors?.password}
         />
         {/* Button */}
-        <Button
-          gradientDuoTone="purpleToPink"
-          type="submit"
-          className={`transition-all duration-300 ${isLoading ? "cursor-not-allowed opacity-50" : ""}`}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <>
-              <Spinner size="sm" />
-              <span className="pl-3">Loading...</span>
-            </>
-          ) : (
-            "Sign Up"
-          )}
-        </Button>
+        <LoadingButton isLoading={isLoading} text="Sign in" />
 
         <OAuth />
       </form>
