@@ -17,11 +17,9 @@ export function useSignup() {
       navigate("/sign-in");
     },
     onError: (err) => {
-      toast.error(err.message);
+      toast.error(error.message, { icon: "❌" });
     },
   });
-
-  console.log(isLoading);
 
   return { isLoading, signup, isSuccess, error };
 }

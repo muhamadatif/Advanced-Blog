@@ -7,7 +7,6 @@ export default function SearchForm() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);

@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from "react-hook-form";
+import { Form, FormProvider, useForm } from "react-hook-form";
 import { FormField } from "../../../components/FormField";
 import { Button, Spinner } from "flowbite-react";
 import { useSignup } from "./useSignup";
@@ -21,7 +21,7 @@ const SignupForm = () => {
     signup(data);
   };
   return (
-    <FormProvider>
+    <>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
           label="Your Username"
@@ -70,7 +70,7 @@ const SignupForm = () => {
 
         <OAuth />
       </form>
-    </FormProvider>
+    </>
   );
 };
 

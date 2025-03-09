@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Button, Modal, Table } from "flowbite-react";
-import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { useAuthUser } from "../hooks/useAuthUser";
 const DashUsers = () => {
-  // const { currentUser } = useSelector((state) => state.user);
-  const currentUser = useAuthUser();
-
   const [users, setUsers] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState("");
+
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchUsers = async () => {

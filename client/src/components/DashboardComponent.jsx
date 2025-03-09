@@ -10,7 +10,6 @@ import {
 import { Button, Table } from "flowbite-react";
 
 import { Link } from "react-router-dom";
-import { useAuthUser } from "../hooks/useAuthUser";
 
 const DashboardComponent = () => {
   const [users, setUsers] = useState([]);
@@ -22,8 +21,7 @@ const DashboardComponent = () => {
   const [lastMonthUsers, setLastMonthUsers] = useState(0);
   const [lastMonthPosts, setLastMonthPosts] = useState(0);
   const [lastMonthComments, setLastMonthComments] = useState(0);
-  // const { currentUser } = useSelector((state) => state.user);
-  const currentUser = useAuthUser();
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchUsers = async () => {

@@ -11,12 +11,15 @@ export const FormField = ({
   register,
   isLoading,
   error,
+  defaultValue = "",
 }) => {
   return (
     <div className="flex flex-col">
-      <Label htmlFor={id} className="font-medium">
-        {label}
-      </Label>
+      {label && (
+        <Label htmlFor={id} className="font-medium">
+          {label}
+        </Label>
+      )}
 
       {isLoading ? (
         <Skeleton
@@ -31,6 +34,7 @@ export const FormField = ({
           type={type}
           placeholder={placeholder}
           id={id}
+          defaultValue={defaultValue}
           className={`rounded-lg border transition-all duration-300 ${
             error
               ? "border-red-500 focus:ring-red-500"

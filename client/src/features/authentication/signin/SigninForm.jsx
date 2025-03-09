@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FormField } from "../../../components/FormField";
 import { Alert, Button, Spinner } from "flowbite-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,7 @@ const SigninForm = () => {
     signin(data);
   };
   return (
-    <FormProvider>
+    <>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <FormField
           label="Your Email"
@@ -61,10 +61,10 @@ const SigninForm = () => {
       </form>
       {error && (
         <Alert className="mt-5" color="failure">
-          {error}
+          {error.message}
         </Alert>
       )}
-    </FormProvider>
+    </>
   );
 };
 

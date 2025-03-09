@@ -1,10 +1,12 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signoutApi } from "../services/apiAuth";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { signoutApi } from "../services/apiAuth";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/user/userSlice";
 
 export const useSignout = () => {
-  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     isPending: isLoading,
@@ -13,7 +15,7 @@ export const useSignout = () => {
   } = useMutation({
     mutationFn: signoutApi,
     onSuccess: () => {
-      queryClient.removeQueries(["user"]);
+      dispatch(logout());
       navigate("/sign-in");
     },
     onError: (error) => {

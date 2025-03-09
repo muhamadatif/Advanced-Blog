@@ -17,7 +17,7 @@ export const useGoogleAuth = () => {
       navigate("/dashboard", { replace: true }); // Replaces the current entry in history. The user cannot go back to the previous page using the browser's "Back" button.
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(error.message, { icon: "❌" });
     },
   });
   return { isLoading, googleAuth, error };
