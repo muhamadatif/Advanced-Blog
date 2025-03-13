@@ -5,35 +5,11 @@ import DOMPurify from "dompurify"; // It's used to prevent Cross-Site Scripting 
 import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
+import { useGetPost } from "../features/posts/useGetPost";
 
 export default function PostPage() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
-  const { postSlug } = useParams();
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        setError(true);
-        const res = await fetch(`/api/post/getposts?slug=${postSlug}`);
-        const data = await res.json();
-        if (!res.ok) {
-          setError(true);
-          setLoading(false);
-        }
-        if (res.ok) {
-          setPost(data.posts[0]);
-          setLoading(false);
-          setError(false);
-        }
-      } catch (error) {
-        setError(true);
-        setLoading(false);
-      }
-    };
-    fetchPost();
-  }, [postSlug]);
+  const { post, isLoading } = useGetPost();
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
@@ -50,7 +26,7 @@ export default function PostPage() {
     fetchRecentPosts();
   }, []);
 
-  if (loading)
+  if (isLoading)
     return (
       <div className="flex min-h-screen items-center justify-center">
         <Spinner size="xl" />
@@ -79,8 +55,8 @@ export default function PostPage() {
         <span className="italic">
           {post && (post.content.length / 1000).toFixed(0) < 1
             ? "1"
-            : (post.content.length / 1000).toFixed(0)}
-          mins read
+            : (post.content.length / 1000).toFixed(0)}{" "}
+          mins to read
         </span>
       </div>
       <div

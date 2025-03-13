@@ -5,18 +5,14 @@ import { useNavigate } from "react-router-dom";
 
 export const useCreatePost = () => {
   const navigate = useNavigate();
-  const {
-    mutate: createPost,
-    isPending: isCreating,
-    error,
-  } = useMutation({
+  const { mutate: createPost, isPending: isCreating } = useMutation({
     mutationFn: createPostApi,
     onSuccess: (data) => {
       toast.success("You successfully created a post ");
-      navigate(`/post/${data.slug}`);
+      navigate(`/post/${data.slug}`, { replace: true });
     },
     onError: (error) => {
-      toast(error.message, { icon: "❌" });
+      toast.error(error, { icon: "❌" });
     },
   });
   return { createPost, isCreating };

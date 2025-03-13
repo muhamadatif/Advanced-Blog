@@ -1,7 +1,7 @@
 import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 /*eslint-disable */
-const ModalComponent = ({ callback, modalHeader, showModal, setShowModal }) => {
+const DeletionModal = ({ callback, modalHeader, showModal, setShowModal }) => {
   return (
     <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
       <Modal.Header />
@@ -31,4 +31,4 @@ const ModalComponent = ({ callback, modalHeader, showModal, setShowModal }) => {
   );
 };
 
-export default ModalComponent;
+export default DeletionModal;

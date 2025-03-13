@@ -6,13 +6,29 @@ import { createPostSchema } from "../../schemas/postSchema";
 import ReactQuillComponent from "../../components/ReactQuillComponent";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { useCreatePost } from "./useCreatePost";
+import { useUpdatePost } from "./useUpdatePost";
 import { useImageUpload } from "../../hooks/useImageUpload";
 import LoadingButton from "../../components/LoadingButton";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css"; // Import styles
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
-const CreatePostForm = () => {
+/*eslint-disable*/
+const CreateUpdatePostForm = () => {
   const { createPost, isCreating } = useCreatePost();
+  const { updatePost, isUpdating } = useUpdatePost();
+  const location = useLocation();
+  let post = location.state?.post || {};
+  const { _id: postId, userId, ...values } = post;
+  const [postData, setPostData] = useState(
+    Object.keys(values).length > 0 ? values : {},
+  );
+
+  const isEditSession = Boolean(postId);
+
+  const isLoading = isCreating || isUpdating;
+
   const { handleUpload, imageUrl, imageUploadingProgress, imageUploadingEror } =
     useImageUpload();
 
@@ -21,23 +37,31 @@ const CreatePostForm = () => {
     handleSubmit,
     setValue,
     trigger,
-    clearErrors,
     watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(createPostSchema),
     mode: "onBlur",
+    defaultValues: {
+      content: values?.content || "",
+    },
   });
 
   const imageFile = watch("image");
 
   const onSubmit = (data) => {
-    createPost({ ...data, image: imageUrl });
+    if (isEditSession) {
+      const updateData = { ...postData, image: imageUrl };
+
+      updatePost({ postId, userId, updateData });
+    } else {
+      createPost({ ...data, image: imageUrl });
+    }
   };
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-      {isCreating ? (
+      {isLoading ? (
         <Skeleton
           height={40}
           borderRadius={8}
@@ -52,10 +76,26 @@ const CreatePostForm = () => {
             placeholder="title"
             id="title"
             register={register}
-            error={errors.title}
+            error={errors?.title}
             styles="flex-1"
+            value={postData?.title}
+            onChange={(e) => {
+              setPostData({ ...postData, [e.target.id]: e.target.value });
+              setValue("title", e.target.value, { shouldValidate: true });
+            }}
+            onBlur={() => {
+              setValue("content", "", { shouldValidate: true }); // ✅ Ensure validation triggers
+              trigger("content");
+            }}
           />
-          <Select {...register("category")}>
+          <Select
+            {...register("category")}
+            id="category"
+            value={postData?.category}
+            onChange={(e) =>
+              setPostData({ ...postData, [e.target.id]: e.target.value })
+            }
+          >
             <option value={"uncategorized"}>Select a category</option>
             <option value={"javascript"}>JavaScript</option>
             <option value={"reactjs"}>React.js</option>
@@ -64,7 +104,7 @@ const CreatePostForm = () => {
         </div>
       )}
 
-      {isCreating ? (
+      {isLoading ? (
         <Skeleton
           height={40}
           borderRadius={8}
@@ -111,10 +151,17 @@ const CreatePostForm = () => {
             {errors?.image?.message || imageUploadingEror}
           </Alert>
         ))}
+      {!imageUrl && postData.image && (
+        <img
+          src={postData.image}
+          alt="upload"
+          className="h-72 w-full object-cover"
+        />
+      )}
       {imageUrl && (
         <img src={imageUrl} alt="upload" className="h-72 w-full object-cover" />
       )}
-      {isCreating ? (
+      {isLoading ? (
         <Skeleton
           height={288}
           borderRadius={8}
@@ -127,17 +174,37 @@ const CreatePostForm = () => {
           placeholder="Write something...."
           id="content"
           error={errors?.content}
-          onChange={(_, __, ___, editor) => {
-            const plainText = editor.getText().trim(); // Extract plain text
-            setValue("content", plainText); // ✅ Set value
-            clearErrors("content"); // ✅ Remove "Required" error if user starts typing
+          value={postData?.content}
+          onChange={(content) => {
+            const trimmedContent = content.replace(/<(.|\n)*?>/g, "").trim();
+
+            setPostData({ ...postData, content }); // ✅ Update local state
+            setValue("content", content, { shouldValidate: true }); // ✅ Sync with form
+
+            // ✅ Trigger validation if content is empty
+            if (!trimmedContent) {
+              setValue("content", "", { shouldValidate: true });
+            }
+
+            trigger("content"); // ✅ Validate on change
           }}
-          onBlur={() => trigger("content")}
+          onBlur={() => {
+            const trimmedContent = postData?.content
+              ?.replace(/<(.|\n)*?>/g, "")
+              .trim();
+            if (!trimmedContent) {
+              setValue("content", "", { shouldValidate: true }); // ✅ Ensure validation triggers
+            }
+            trigger("content");
+          }}
         />
       )}
-      <LoadingButton isLoading={isCreating} text="Publish" />
+      <LoadingButton
+        isLoading={isLoading}
+        text={isEditSession ? "Update" : "Publish"}
+      />
     </form>
   );
 };
 
-export default CreatePostForm;
+export default CreateUpdatePostForm;

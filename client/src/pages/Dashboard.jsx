@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import DashSidebar from "../components/DashSidebar";
-import DashProfile from "../components/DashProfile";
-import DashPosts from "../components/DashPosts";
-import DashUsers from "../components/DashUsers";
-import DashComments from "../components/DashComments";
-import DashboardComponent from "../components/DashboardComponent";
+import DashSidebar from "../features/Dashborad/DashSidebar";
+import DashProfile from "../features/Dashborad/DashProfile";
+import DashPosts from "../features/Dashborad/DashPosts";
+import DashUsers from "../features/Dashborad/DashUsers";
+import DashComments from "../features/Dashborad/DashComments";
+import DashboardComponent from "../features/Dashborad/DashboardComponent";
 
 const Dashboard = () => {
   const location = useLocation();

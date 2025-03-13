@@ -10,7 +10,7 @@ import {
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useSignout } from "../hooks/useSignout";
+import { useSignout } from "../../hooks/useSignout";
 
 const DashSidebar = () => {
   const { currentUser } = useSelector((state) => state.user);

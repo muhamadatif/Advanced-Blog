@@ -11,83 +11,42 @@ import { updateUserSchema } from "../../schemas/userSchema";
 import { useUpdateUser } from "./useUpdateUser";
 import { FormField } from "../../components/FormField";
 import toast from "react-hot-toast";
-import { MAX_SIZE } from "../../utils/constants";
 import LoadingButton from "../../components/LoadingButton";
+import { useImageUpload } from "../../hooks/useImageUpload";
 
 function UpdateUserForm() {
-  const [imageFileUrl, setImageFileUrl] = useState(null);
-  const [imageUploadProgress, setImageUploadProgress] = useState(0);
-  const [imageUploading, setImageUploading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const { isUpdating, updateUser } = useUpdateUser();
+  const [imageFileUrl, setImageFileUrl] = useState(null);
 
+  const { handleUpload, imageUploadingProgress, imageUrl } = useImageUpload();
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     trigger,
+    reset,
     formState: { errors },
   } = useForm({ resolver: zodResolver(updateUserSchema), mode: "onBlur" });
   const filePickerRef = useRef();
 
   const imageFile = watch("profilePicture");
-  const hasUploadRef = useRef(false);
 
   useEffect(() => {
-    if (imageFile && !hasUploadRef.current) {
-      if (imageFile.size > MAX_SIZE) {
-        return;
-      }
-      setImageFileUrl(URL.createObjectURL(imageFile));
-      const uploadImage = async () => {
-        setImageUploading(true);
-        const formData = new FormData();
-        formData.append("file", imageFile);
-        formData.append(
-          "upload_preset",
-          import.meta.env.VITE_CLOUDINARY_PRESET_NAME,
-        );
-        formData.append(
-          "cloud_name",
-          import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
-        );
-
-        try {
-          const response = await axios.post(
-            `https://api.cloudinary.com/v1_1/${
-              import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-            }/image/upload`,
-            formData,
-            {
-              onUploadProgress: (progressEvent) => {
-                const progress = Math.round(
-                  (progressEvent.loaded / progressEvent.total) * 100,
-                );
-                setImageUploadProgress(progress); // Update progress state
-              },
-            },
-          );
-          setImageFileUrl(response.data.secure_url);
-          setImageUploading(false);
-          hasUploadRef.current = true;
-        } catch (error) {
-          toast.error(error.message);
-          setImageUploading(false);
-          setImageFileUrl(null);
-        }
-      };
-      uploadImage();
+    if (imageFile) {
+      handleUpload(imageFile);
     }
-  }, [imageFile]);
+  }, [imageFile, handleUpload]);
 
   const onSubmit = async (data) => {
-    if (imageUploading) {
+    if (imageUploadingProgress) {
       toast.error("Please wait for image to upload");
+
       return;
     }
 
-    const formData = { ...data, profilePicture: imageFileUrl };
+    const formData = { ...data, profilePicture: imageUrl };
 
     const userData = Object.fromEntries(
       Object.entries(formData).filter(([_, value]) => value),
@@ -103,7 +62,7 @@ function UpdateUserForm() {
       return;
     }
     updateUser({ userId: currentUser._id, userData });
-    setImageUploadProgress(0);
+    reset();
   };
 
   return (
@@ -115,6 +74,7 @@ function UpdateUserForm() {
         hidden
         onChange={(e) => {
           const file = e.target.files[0];
+          setImageFileUrl(URL.createObjectURL(file));
           setValue("profilePicture", file, { shouldValidate: true });
           trigger("profilePicture");
         }}
@@ -124,10 +84,10 @@ function UpdateUserForm() {
         className="relative h-32 w-32 cursor-pointer self-center rounded-full shadow-md"
         onClick={() => filePickerRef?.current?.click()}
       >
-        {imageUploadProgress > 0 && imageUploadProgress <= 100 && (
+        {imageUploadingProgress > 0 && imageUploadingProgress <= 100 && (
           <CircularProgressbar
-            value={imageUploadProgress}
-            text={`${imageUploadProgress}%`}
+            value={imageUploadingProgress}
+            text={`${imageUploadingProgress}%`}
             strokeWidth={5}
             styles={{
               root: {
@@ -138,7 +98,7 @@ function UpdateUserForm() {
                 left: 0,
               },
               path: {
-                stroke: `rgba(62,152,199),${imageUploadProgress / 100}`,
+                stroke: `rgba(62,152,199),${imageUploadingProgress / 100}`,
               },
             }}
           />
@@ -147,7 +107,9 @@ function UpdateUserForm() {
           src={imageFileUrl || currentUser.profilePicture}
           alt="user"
           className={`h-full w-full max-w-[100%] rounded-full border-8 border-[lightgray] object-cover ${
-            imageUploadProgress && imageUploadProgress < 100 && "opacity-60"
+            imageUploadingProgress &&
+            imageUploadingProgress < 100 &&
+            "opacity-60"
           }`}
         />
       </div>
@@ -186,7 +148,7 @@ function UpdateUserForm() {
         isLoading={isUpdating}
       />
 
-      <LoadingButton isLoading={isUpdating} text="Update User" />
+      <LoadingButton isLoading={isUpdating} text="Update" />
       {currentUser.isAdmin && (
         <Link to="/create-post">
           <Button

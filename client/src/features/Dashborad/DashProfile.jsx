@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useSignout } from "../hooks/useSignout";
-import { useDeleteUser } from "../features/users/useDeleteUser";
-import UpdateUserForm from "../features/users/UpdateUserForm";
-import ModalComponent from "./Modal";
+import { useSignout } from "../../hooks/useSignout";
+import { useDeleteUser } from "../users/useDeleteUser";
+import UpdateUserForm from "../users/UpdateUserForm";
+import DeletionModal from "../../components/DeletionModal";
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -27,7 +27,7 @@ const DashProfile = () => {
         </span>
       </div>
 
-      <ModalComponent
+      <DeletionModal
         callback={() => deleteUser(currentUser._id)}
         modalHeader={"Are you sure you want to delete your account?"}
         showModal={showModal}

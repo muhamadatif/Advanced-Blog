@@ -1,13 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useImageUpload = () => {
   const [imageUrl, setImageUrl] = useState();
   const [imageUploadingEror, setImageUploadingError] = useState(null);
   const [imageUploadingProgress, setImageUploadingProgress] = useState(null);
-  const handleUpload = async (imageFile) => {
-    console.log(imageFile);
-
+  const handleUpload = useCallback(async (imageFile) => {
     try {
       if (!imageFile) {
         setImageUploadingError("Please select an image");
@@ -37,13 +35,12 @@ export const useImageUpload = () => {
         },
       );
       setImageUrl(response.data.secure_url);
+      setImageUploadingProgress(null);
     } catch (error) {
       setImageUploadingError(error.message);
       setImageUploadingProgress(null);
-    } finally {
-      setImageUploadingProgress(null);
     }
-  };
+  }, []);
 
   return { handleUpload, imageUrl, imageUploadingEror, imageUploadingProgress };
 };

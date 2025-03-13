@@ -13,6 +13,8 @@ export const FormField = ({
   error,
   defaultValue = "",
   styles,
+  value,
+  onChange,
 }) => {
   return (
     <div className={` ${styles} flex flex-col`}>
@@ -35,6 +37,7 @@ export const FormField = ({
           type={type}
           placeholder={placeholder}
           id={id}
+          value={value}
           defaultValue={defaultValue}
           className={`rounded-lg border transition-all duration-300 ${
             error
@@ -42,6 +45,7 @@ export const FormField = ({
               : "border-gray-600 focus:ring-blue-500"
           }`}
           {...register(id)}
+          onChange={onChange}
         />
       )}
 

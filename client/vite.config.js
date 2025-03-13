@@ -11,6 +11,7 @@ export default defineConfig({
         target: "http://localhost:3000",
         //We use it because we do http and not https
         secure: false,
+        ws: true,
       },
     },
   },

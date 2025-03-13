@@ -78,6 +78,9 @@ export const getPosts = async (req, res, next) => {
 };
 
 export const deletePost = async (req, res, next) => {
+  console.log(req.params.postId, req.params.userId);
+  console.log("hi");
+
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(403, "You are not allowed to delete this post");
   }

@@ -1,22 +1,25 @@
-import { useMutation } from "@tanstack/react-query";
-import { deleteUserApi } from "../../services/apiUser";
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteUserApi } from "../../services/apiUsers";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export const useDeleteUser = () => {
-  const navigate = useNavigate();
-  const {
-    mutate: deleteUser,
-    isPending: isDeleting,
-    error,
-  } = useMutation({
+  const queryClient = useQueryClient();
+  const [showModal, setShowModal] = useState(false);
+  const { mutate: deleteUsers, isPending: isDeleting } = useMutation({
     mutationFn: deleteUserApi,
     onSuccess: () => {
-      navigate("/sign-up");
+      toast.success("User deleted successfully!");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
     },
     onError: (error) => {
-      toast(error.message, { icon: "❌" });
+      toast.error(error, { icon: "❌" });
     },
   });
-  return { deleteUser, isDeleting, error };
+  return {
+    deleteUsers,
+    isDeleting,
+    showModal,
+    setShowModal,
+  };
 };

@@ -9,7 +9,7 @@ const modules = {
     highlight: (text) => hljs.highlightAuto(text).value, // Enable syntax highlighting
   },
   toolbar: [
-    ["bold", "italic", "underline", "strike"], // Basic text styling
+    ["bold", "italic", "underline", "strike", "copy"], // Basic text styling
     [{ header: [1, 2, 3, false] }], // Headers
     ["blockquote", "code-block", "code"], // Code block support
     [{ list: "ordered" }, { list: "bullet" }], // Lists
@@ -23,6 +23,7 @@ const modules = {
     ["clean"], // Remove formatting
     ["link"], // Adds the link button
   ],
+  clipboard: true,
 };
 
 const formats = [
@@ -31,6 +32,7 @@ const formats = [
   "italic",
   "underline",
   "strike",
+  "copy",
   "blockquote",
   "code-block",
   "code",
@@ -46,12 +48,13 @@ const formats = [
 ];
 /*eslint-disable*/
 const ReactQuillComponent = ({
-  className,
   placeholder,
   onChange,
   id,
   onBlur,
   error,
+  value,
+  defaultValue,
 }) => {
   return (
     <>
@@ -64,6 +67,8 @@ const ReactQuillComponent = ({
         id={id}
         onChange={onChange}
         onBlur={onBlur}
+        value={value}
+        defaultValue={defaultValue}
       />
       {error?.message && (
         <Alert className="mt-5" color="failure">
