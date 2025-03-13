@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
 import DOMPurify from "dompurify"; // It's used to prevent Cross-Site Scripting (XSS) vulnerabilities from adding a user
 import CallToAction from "../components/CallToAction";
-import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
 import { useGetPost } from "../features/posts/useGetPost";
+import CommentSection from "../features/comments/CommentSection";
 
 export default function PostPage() {
   const [recentPosts, setRecentPosts] = useState(null);
