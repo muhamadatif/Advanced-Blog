@@ -27,10 +27,10 @@ app.use(express.json());
 app.use(cookieParser());
 // app.use(cors());
 
-app.listen(3000, () => {
-  console.log("server is running on port 3000");
+const PORT = process.env.PORT || 8000; // Use Koyeb's assigned port
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/post", postRoutes);
