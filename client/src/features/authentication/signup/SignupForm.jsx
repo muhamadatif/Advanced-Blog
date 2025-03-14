@@ -53,7 +53,7 @@ const SignupForm = () => {
           error={errors?.password}
         />
         {/* Button */}
-        <LoadingButton isLoading={isLoading} text="Sign in" />
+        <LoadingButton isLoading={isLoading} text="Sign up" />
 
         <OAuth />
       </form>
