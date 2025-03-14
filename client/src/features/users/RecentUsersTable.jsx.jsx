@@ -11,9 +11,12 @@ const RecentUsersTable = ({ users, isLoading }) => {
           <Table.HeadCell>Username</Table.HeadCell>
           <Table.HeadCell>Admin</Table.HeadCell>
         </Table.Head>
-        <Table.Body className="divide-y">
-          {[...Array(1)].map((_, index) => (
-            <Table.Row key={index} className="bg-white dark:border-gray-700">
+        <Table.Body>
+          {[...Array(4)].map((_, index) => (
+            <Table.Row
+              key={index}
+              className="divide-y bg-white dark:border-gray-700"
+            >
               <Table.Cell>
                 <div className="h-10 w-10 animate-pulse rounded-full bg-gray-300"></div>
               </Table.Cell>

@@ -9,9 +9,12 @@ const RecentCommentsTable = ({ comments, isLoading }) => {
           <Table.HeadCell>Comment content</Table.HeadCell>
           <Table.HeadCell>Likes</Table.HeadCell>
         </Table.Head>
-        <Table.Body className="divide-y">
+        <Table.Body>
           {[...Array(5)].map((_, index) => (
-            <Table.Row key={index} className="bg-white dark:border-gray-700">
+            <Table.Row
+              key={index}
+              className="divide-y bg-white dark:border-gray-700"
+            >
               <Table.Cell className="w-96">
                 <div className="mb-1 h-4 w-full animate-pulse rounded bg-gray-300"></div>
                 <div className="h-4 w-3/4 animate-pulse rounded bg-gray-300"></div>
@@ -37,17 +40,20 @@ const RecentCommentsTable = ({ comments, isLoading }) => {
           <Table.HeadCell>Comment content</Table.HeadCell>
           <Table.HeadCell>Likes</Table.HeadCell>
         </Table.Head>
-        {comments &&
-          comments.map((comment) => (
-            <Table.Body key={comment._id} className="divide-y">
-              <Table.Row className="bg-white dark:border-gray-700">
+        <Table.Body className="divide-y">
+          {comments &&
+            comments.map((comment) => (
+              <Table.Row
+                className="bg-white dark:border-gray-700"
+                key={comment._id}
+              >
                 <Table.Cell className="w-96">
                   <p className="line-clamp-2">{comment.content}</p>
                 </Table.Cell>
                 <Table.Cell>{comment.numberOfLikes}</Table.Cell>
               </Table.Row>
-            </Table.Body>
-          ))}
+            ))}
+        </Table.Body>
       </Table>
     </div>
   );

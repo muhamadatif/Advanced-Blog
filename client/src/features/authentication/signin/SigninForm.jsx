@@ -16,7 +16,6 @@ const SigninForm = () => {
   } = useForm({
     resolver: zodResolver(signinSchema),
   });
-  console.log(errors);
 
   const onSubmit = (data) => {
     signin(data);

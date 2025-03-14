@@ -51,6 +51,7 @@ function UpdateUserForm() {
     const userData = Object.fromEntries(
       Object.entries(formData).filter(([_, value]) => value),
     );
+    console.log(userData);
 
     if (
       userData.username === currentUser.username &&

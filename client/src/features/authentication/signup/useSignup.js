@@ -16,7 +16,7 @@ export function useSignup() {
       toast.success("Account successfully created!");
       navigate("/sign-in");
     },
-    onError: (err) => {
+    onError: (error) => {
       toast.error(error.message, { icon: "❌" });
     },
   });

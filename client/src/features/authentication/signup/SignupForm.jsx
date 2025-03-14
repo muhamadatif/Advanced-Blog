@@ -18,8 +18,6 @@ const SignupForm = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-
     signup(data);
   };
   return (
