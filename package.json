@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
-    "build": "echo 'No build step needed for backend'",
-    "heroku-postbuild": "npm install && npm install --prefix client && npm run build --prefix client"
+    "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "engines": {
     "node": "18.x"
