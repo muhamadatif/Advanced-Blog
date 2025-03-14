@@ -18,7 +18,10 @@ export const useSignin = () => {
     onSuccess: (currentUser) => {
       dispatch(login(currentUser));
       queryClient.setQueryData(["currentUser", currentUser]);
-      navigate("/dashboard?tab=dash", { replace: true }); // Replaces the current entry in history. The user cannot go back to the previous page using the browser's "Back" button.
+      currentUser.isAdmin
+        ? navigate("/dashboard?tab=dash", { replace: true })
+        : navigate("/", { replace: true });
+      // Replaces the current entry in history. The user cannot go back to the previous page using the browser's "Back" button.
     },
     onError: (error) => {
       toast.error(error.message, { icon: "❌" });

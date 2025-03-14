@@ -45,7 +45,7 @@ export const FormField = ({
               : "border-gray-600 focus:ring-blue-500"
           }`}
           {...register(id)}
-          onChange={onChange}
+          {...(onChange && { onChange })}
         />
       )}
 

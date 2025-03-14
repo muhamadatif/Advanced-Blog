@@ -1,7 +1,8 @@
 import { Table } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 /*eslint-disable */
 const PostTableRow = ({ post, setShowModal, setPostIdToDelete }) => {
+  const navigate = useNavigate();
   return (
     <Table.Row
       key={post._id}

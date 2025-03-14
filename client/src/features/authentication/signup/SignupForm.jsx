@@ -1,6 +1,5 @@
-import { Form, FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FormField } from "../../../components/FormField";
-import { Button, Spinner } from "flowbite-react";
 import { useSignup } from "./useSignup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../../../schemas/authSchema";
@@ -19,6 +18,8 @@ const SignupForm = () => {
   });
 
   const onSubmit = (data) => {
+    console.log(data);
+
     signup(data);
   };
   return (
