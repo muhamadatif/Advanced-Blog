@@ -64,6 +64,5 @@ export const signoutApi = async () => {
   if (!res.ok) {
     throw new Error(data.message);
   }
-  console.log(data);
   return data;
 };

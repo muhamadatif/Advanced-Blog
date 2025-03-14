@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export const useGetPosts = (query) => {
   const { currentUser } = useSelector((state) => state.user);
+
   const {
     data,
     error,
@@ -21,7 +22,7 @@ export const useGetPosts = (query) => {
         ? currentFetchedPosts
         : undefined;
     },
-    enabled: currentUser.isAdmin,
+    enabled: !!currentUser.isAdmin,
     // Fetch only if admin
   });
 

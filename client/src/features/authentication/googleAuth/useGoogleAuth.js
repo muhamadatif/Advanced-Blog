@@ -16,7 +16,7 @@ export const useGoogleAuth = () => {
     mutationFn: googleAuthApi,
     onSuccess: (currentUser) => {
       dispatch(login(currentUser));
-      navigate("/dashboard", { replace: true }); // Replaces the current entry in history. The user cannot go back to the previous page using the browser's "Back" button.
+      navigate("/dashboard?tab=dash", { replace: true }); // Replaces the current entry in history. The user cannot go back to the previous page using the browser's "Back" button.
     },
     onError: (error) => {
       toast.error(error.message, { icon: "❌" });

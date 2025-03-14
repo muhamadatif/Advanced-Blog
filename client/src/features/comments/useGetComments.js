@@ -23,7 +23,7 @@ export const useGetComments = (query) => {
         ? currentFetchedComments
         : undefined;
     },
-    enabled: currentUser.isAdmin,
+    enabled: !!currentUser.isAdmin,
   });
 
   return { isLoading, data, hasNextPage, fetchNextPage, isFetchingNextPage };

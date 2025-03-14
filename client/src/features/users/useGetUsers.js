@@ -20,7 +20,7 @@ export const useGetUsers = (query) => {
         ? currentFetchedUsers
         : undefined;
     },
-    enabled: currentUser.isAdmin,
+    enabled: !!currentUser.isAdmin,
     // Fetch only if admin
   });
 
