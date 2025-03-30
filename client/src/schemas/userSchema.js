@@ -5,7 +5,7 @@ export const updateUserSchema = z.object({
   profilePicture: z
     .instanceof(File)
     .refine((file) => file.size <= MAX_SIZE, {
-      message: "File size must be less than 2MB",
+      message: "File size must be less than 5MB",
     })
     .optional(),
   username: z
