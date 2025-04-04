@@ -10,13 +10,13 @@ export const updateUserSchema = z.object({
     .optional(),
   username: z
     .string()
-    .min(7, "Username must be at least 6 characters")
+    .min(3, "Username must be at least 3 characters")
     .optional()
     .or(z.literal("")),
   email: z.string().email("Invalid email address").optional().or(z.literal("")),
   password: z
     .string()
-    .min(7, "Password must be at least 7 characters")
+    .min(6, "Password must be at least 6 characters")
     .optional()
     .or(z.literal("")),
 });
