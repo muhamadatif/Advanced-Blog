@@ -1,10 +1,7 @@
 import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { useDispatch } from "react-redux";
-import { deleteSuccess } from "../redux/user/userSlice";
 /*eslint-disable */
 const DeletionModal = ({ callback, modalHeader, showModal, setShowModal }) => {
-  const dispatch = useDispatch();
   return (
     <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
       <Modal.Header />
@@ -20,7 +17,6 @@ const DeletionModal = ({ callback, modalHeader, showModal, setShowModal }) => {
               onClick={() => {
                 setShowModal(false);
                 callback();
-                dispatch(deleteSuccess());
               }}
             >
               Yes, i&apos;m sure

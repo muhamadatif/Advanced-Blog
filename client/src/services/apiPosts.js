@@ -39,6 +39,7 @@ export const updatePostApi = async (postId, userId, updateData) => {
 
 export const getPostsApi = async ({ pageParam = 0, queryKey }) => {
   const limit = queryKey[1];
+  console.log(limit);
 
   try {
     const res = await fetch(
@@ -74,7 +75,7 @@ export const deletePostApi = async (postIdToDelete, userId) => {
       },
     );
     const data = await res.json();
-    if (!res.ok) throw new Error("There was an error deleting the user");
+    if (!res.ok) throw new Error("There was an error deleting the post");
 
     return data;
   } catch (error) {

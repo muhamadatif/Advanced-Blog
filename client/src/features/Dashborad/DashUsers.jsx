@@ -11,7 +11,7 @@ const DashUsers = () => {
   const [userIdToDelete, setUserIdToDelete] = useState("");
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchNextPageError } =
     useGetUsers();
-  const { deleteUsers, isDeleting, showModal, setShowModal } = useDeleteUser();
+  const { deleteUser, isDeleting, showModal, setShowModal } = useDeleteUser();
   const { currentUser } = useSelector((state) => state.user);
   const users = data?.pages[0].users;
 
@@ -31,7 +31,7 @@ const DashUsers = () => {
 
   return (
     <div className="dark: table-auto overflow-x-scroll p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 md:mx-auto">
-      {currentUser.isAdmin && users.length > 0 ? (
+      {currentUser?.isAdmin && users?.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
             <Table.Head>
@@ -42,7 +42,7 @@ const DashUsers = () => {
               <Table.HeadCell>Admin</Table.HeadCell>
               <Table.HeadCell>Delete</Table.HeadCell>
             </Table.Head>
-            {users.map((user) => (
+            {users?.map((user) => (
               <UsersTableRow
                 key={user._id}
                 user={user}
@@ -69,7 +69,7 @@ const DashUsers = () => {
         modalHeader={"Are you sure you want to delete this user"}
         showModal={showModal}
         setShowModal={setShowModal}
-        callback={() => deleteUsers(userIdToDelete)}
+        callback={() => deleteUser(userIdToDelete)}
       />
     </div>
   );

@@ -17,7 +17,7 @@ export const useUpdatePost = () => {
       navigate(`/post/${data.slug}`, { replace: true });
     },
     onError: (error) => {
-      toast.error(error, { icon: "❌" });
+      toast.error(error.message, { icon: "❌" });
     },
   });
 

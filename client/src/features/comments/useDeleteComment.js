@@ -9,12 +9,12 @@ export const useDeleteComment = () => {
   const { mutate: deleteComment, isPending: isDeleting } = useMutation({
     mutationFn: deleteCommentApi,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
-      setShowModal(false);
       toast.success("Comment deleted successfully");
+      setShowModal(false);
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error) => {
-      toast.error(error);
+      toast.error(error.message, { icon: "❌" });
       setShowModal(false);
     },
   });

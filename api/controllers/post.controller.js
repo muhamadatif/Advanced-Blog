@@ -31,8 +31,6 @@ export const create = async (req, res, next) => {
 
 export const getPosts = async (req, res, next) => {
   try {
-    console.log(req.query.limit);
-
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     const limit = parseInt(req.query.limit) || 9;
@@ -80,9 +78,6 @@ export const getPosts = async (req, res, next) => {
 };
 
 export const deletePost = async (req, res, next) => {
-  console.log(req.params.postId, req.params.userId);
-  console.log("hi");
-
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(403, "You are not allowed to delete this post");
   }

@@ -19,7 +19,9 @@ export const useDeletePost = () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (error) => {
-      toast.error(error, { icon: "❌" });
+      console.log(error);
+
+      toast.error(error.message, { icon: "❌" });
       setShowModal(false);
     },
   });
